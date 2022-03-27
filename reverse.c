@@ -2,28 +2,32 @@
 #include<stdlib.h>
 #define _CRT_SECURE_NO_WARNINGS
 
-int* nbynImatrix();
+int** nbynImatrix();
 int** enterMatrix();
 void checkDet();
 void reverseMat();
 
 int n = 0;
-int* Imatarr;
+int **Imatarr;
 int **inputMatarr;
 
 int main(){
     Imatarr = nbynImatrix();
-    free(Imatarr);
+    printf("%d, %d, %d, %d \n",Imatarr[0][0], Imatarr[0][1], Imatarr[1][0], Imatarr[1][1]); //testing
     inputMatarr = enterMatrix();
-    printf("%d, %d, %d, %d",inputMatarr[0][0], inputMatarr[0][1], inputMatarr[1][0], inputMatarr[1][1]);
+    printf("%d, %d, %d, %d \n",inputMatarr[0][0], inputMatarr[0][1], inputMatarr[1][0], inputMatarr[1][1]); //testing
+
+    //free arrs_should do because of err.
+    free(Imatarr);
+    free(inputMatarr);
     return 0;
 }
 
-int* nbynImatrix(){
+int** nbynImatrix(){ //Function that makes I_matrix
     printf("Reverse Calculator of n by n matrix\n");
-    printf("n = ? (n < 5)\n");
+    printf("n = ? (1 < n < 5)\n");
     scanf("%d",&n);
-    if(n < 1 || n > 4){
+    if(n < 2 || n > 4){
         printf("unsuitable number.");
         exit(0);
     }
@@ -34,6 +38,9 @@ int* nbynImatrix(){
             if(i==j){
                 Imatrix[i][j] = 1;
             }
+            else{
+                Imatrix[i][j] = 0;
+            }
         }
     }
     for (int i = 0; i < n; i++) { //testing
@@ -42,10 +49,10 @@ int* nbynImatrix(){
         }
         printf("\n");
     }
-    return *Imatrix;
+    return Imatrix;
 }
 
-int** enterMatrix(){
+int** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
     int num = 0;
     int det = 0;
     printf("enter %d by %d Matrix\n",n, n);
@@ -69,8 +76,11 @@ int** enterMatrix(){
         + Inputmatrix[0][2] * (Inputmatrix[1][0] * Inputmatrix[2][1] - Inputmatrix[1][1] * Inputmatrix[2][0]);
     }
 
+    if(det == 0){ // if det == 0, there is no reversed matrix
+        printf("Can't be reversed!!");
+    }
+    
     printf("det = %d\n",det);//testing
-
     for (int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
             printf("arr[%d][%d] : %d   ", i+1, j+1, Inputmatrix[i][j]);
