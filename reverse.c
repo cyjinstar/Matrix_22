@@ -4,8 +4,7 @@
 
 int** nbynImatrix();
 int** enterMatrix();
-void checkDet();
-void reverseMat();
+int** reverseMat();
 
 int n = 0;
 int **Imatarr;
@@ -88,4 +87,10 @@ int** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
         printf("\n");
     }
     return Inputmatrix;
+}
+
+int** reverseMat(int** Inputmatrix, int** Imatrix){
+    int row = 0;
+    int col = 0;
+
 }
