@@ -2,17 +2,17 @@
 #include<stdlib.h>
 #define _CRT_SECURE_NO_WARNINGS
 
-int** nbynImatrix();
+float** nbynImatrix();
 int** enterMatrix();
 void reverseMat();
 
 int n = 0;
-int **Imatarr;
+float **Imatarr;
 int **inputMatarr;
 
 int main(){
     Imatarr = nbynImatrix();
-    printf("%d, %d, %d, %d \n",Imatarr[0][0], Imatarr[0][1], Imatarr[1][0], Imatarr[1][1]); //testing
+    printf("%f, %f, %f, %f \n",Imatarr[0][0], Imatarr[0][1], Imatarr[1][0], Imatarr[1][1]); //testing
     inputMatarr = enterMatrix();
     printf("%d, %d, %d, %d \n",inputMatarr[0][0], inputMatarr[0][1], inputMatarr[1][0], inputMatarr[1][1]); //testing
     reverseMat(inputMatarr,Imatarr,n);
@@ -22,7 +22,7 @@ int main(){
     return 0;
 }
 
-int** nbynImatrix(){ //Function that makes I_matrix
+float** nbynImatrix(){ //Function that makes I_matrix
     printf("Reverse Calculator of n by n matrix\n");
     printf("n = ? (1 < n < 5)\n");
     scanf("%d",&n);
@@ -30,9 +30,9 @@ int** nbynImatrix(){ //Function that makes I_matrix
         printf("unsuitable number.");
         exit(0);
     }
-    int** Imatrix = (int**)malloc(sizeof(int*) * n);
+    float** Imatrix = (float**)malloc(sizeof(float*) * n);
     for (int i = 0; i < n; i++) { 
-        Imatrix[i] = (int*)malloc(sizeof(int) * n);
+        Imatrix[i] = (float*)malloc(sizeof(float) * n);
         for (int j = 0; j < n; j++) {
             if(i==j){
                 Imatrix[i][j] = 1;
@@ -44,7 +44,7 @@ int** nbynImatrix(){ //Function that makes I_matrix
     }
     for (int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %d   ", i+1, j+1, Imatrix[i][j]);
+            printf("arr[%f][%f] : %f   ", i+1, j+1, Imatrix[i][j]);
         }
         printf("\n");
     }
@@ -89,7 +89,7 @@ int** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
     return Inputmatrix;
 }
 
-void reverseMat(int** Inputmatrix, int** Imatrix, int n){ //아직 안돌아감, 계산이 안됨
+void reverseMat(int** Inputmatrix, float** Imatrix, int n){ //아직 안돌아감, 계산이 안됨
     int row = 0;
     int col = 0;
 
