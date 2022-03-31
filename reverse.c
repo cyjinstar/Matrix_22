@@ -89,7 +89,7 @@ int** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
     return Inputmatrix;
 }
 
-void reverseMat(int** Inputmatrix, int** Imatrix, int n){
+void reverseMat(int** Inputmatrix, int** Imatrix, int n){ //아직 안돌아감, 계산이 안됨
     int row = 0;
     int col = 0;
 
