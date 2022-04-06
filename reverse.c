@@ -161,18 +161,19 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
     }
     printf("\n");
 
-//bottom_top
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n-1; j++){
+//second_serize
+    for(int j = 1; j < n; j++){
+        for(int i = 0; i < n-1; i++){
             float k = 0;
-            k = Inputmatrix[i][j];
-            for(int l = 0; l < n; l++){
-                Inputmatrix[i][l] = Inputmatrix[i][l] - k * Inputmatrix[j+1][l];
-                Imatrix[i][l] = Imatrix[i][l] - k * Imatrix[j+1][l];
+            k = Inputmatrix[i+1][j];
+            for(int l = j; l < n; l++){
+                Inputmatrix[i][l] -= k * Inputmatrix[i][l];
+                Imatrix[i][l] -= k * Imatrix[i][l];
             }
         }
     }
-    printf("\n EndOfSecond");
+
+    printf("\n EndOfSecond\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
             printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
@@ -188,6 +189,7 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
         }
         printf("\n");
     }
+    printf("\n");
     for (int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
             printf("arr[%d][%d] : %.3f   ", i+1, j+1, Imatrix[i][j]);
