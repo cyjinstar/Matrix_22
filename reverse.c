@@ -12,9 +12,7 @@ float **inputMatarr;
 
 int main(){
     Imatarr = nbynImatrix();
-    printf("%.0f, %.0f, %.0f, %.0f \n",Imatarr[0][0], Imatarr[0][1], Imatarr[1][0], Imatarr[1][1]); //testing
     inputMatarr = enterMatrix();
-    printf("%.0f, %.0f, %.0f, %.0f \n",inputMatarr[0][0], inputMatarr[0][1], inputMatarr[1][0], inputMatarr[1][1]); //testing
     reverseMat(inputMatarr,Imatarr,n);
     //free arrs_should do because of err.
     free(Imatarr);
@@ -94,12 +92,12 @@ void divi(float** Inputmatrix,float** Imatrix){
 
         for(int b = 0; b < n; b++){
 
-            if(Inputmatrix[a][b] != 1){
-                float k = Inputmatrix[0][0];
+            if(Inputmatrix[b][b] != 1){
+                float k = Inputmatrix[b][b];
 
                 for(int i = 0; i < n; i++){
-                    Inputmatrix[a][i] = Inputmatrix[a][i] / k;
-                    Imatrix[a][i] = Imatrix[a][i] / k;
+                    Inputmatrix[b][i] = Inputmatrix[b][i] / k;
+                    Imatrix[b][i] = Imatrix[b][i] / k;
                     }
             }
         }
@@ -110,21 +108,33 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){ //아직 안돌아
 
     divi(Inputmatrix,Imatrix);
 
-    for(int i = 1; i < n; i++){
+    for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+    }
 
-        if(Inputmatrix[i][0] != 0){
-        float k = Inputmatrix[i][0];
-
+    for(int i = 0; i < n-1; i++){
             for(int j = 0; j < n; j++){
-                Inputmatrix[i][j] -= Inputmatrix[i-1][j] * k;
-                Imatrix[i][j] -= Imatrix[i-1][j] * k;
-                divi(Inputmatrix,Imatrix);
+                if(i == j){
+                    break;
+                }
+                if(i==n){
+                    break;
+                }
+                    float k = 0;
+                    k = (1 / Inputmatrix[i+1][j]);
+                    printf("%f\n",k);
+                    for(int l = 0; l < n; l++){
+                        Inputmatrix[i][l] -= k * Inputmatrix[i][l];
+                        Imatrix[i][l] -= k * Imatrix[i][l];
+                    }
             }
 
         }
-    }
 
-    for (int i = 0; i < n; i++) { //testing
+    for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
             printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
         }
