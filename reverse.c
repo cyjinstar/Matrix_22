@@ -115,21 +115,24 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){ //아직 안돌아
         printf("\n");
     }
 
-    for(int i = 0; i < n-1; i++){
-            for(int j = 0; j < n; j++){
+    for(int j = 0; j < n; j++){
+            for(int i = j; i < n-1; i++){
+                /*
                 if(i == j){
                     break;
                 }
                 if(i==n){
                     break;
                 }
+                */
                     float k = 0;
                     k = (1 / Inputmatrix[i+1][j]);
                     printf("%f\n",k);
                     for(int l = 0; l < n; l++){
-                        Inputmatrix[i][l] -= k * Inputmatrix[i][l];
-                        Imatrix[i][l] -= k * Imatrix[i][l];
+                        Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
+                        Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
                     }
+                    divi(Inputmatrix,Imatrix);
             }
 
         }
