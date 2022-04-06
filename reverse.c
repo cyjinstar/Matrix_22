@@ -24,10 +24,12 @@ float** nbynImatrix(){ //Function that makes I_matrix
     printf("Reverse Calculator of n by n matrix\n");
     printf("n = ? (1 < n < 5)\n");
     scanf("%d",&n);
+    /*
     if(n < 2 || n > 4){
         printf("unsuitable number.");
         exit(0);
     }
+    */
     float** Imatrix = (float**)malloc(sizeof(float*) * n);
     for (int i = 0; i < n; i++) { 
         Imatrix[i] = (float*)malloc(sizeof(float) * n);
@@ -39,12 +41,6 @@ float** nbynImatrix(){ //Function that makes I_matrix
                 Imatrix[i][j] = 0.0;
             }
         }
-    }
-    for (int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.1f   ", i+1, j+1, Imatrix[i][j]);
-        }
-        printf("\n");
     }
     return Imatrix;
 }
@@ -64,6 +60,7 @@ float** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
         }
     }
 
+//determinant func. should be down here.
     if(n == 2){
         det = Inputmatrix[0][0] * Inputmatrix[1][1] - Inputmatrix[0][1] * Inputmatrix[1][0];
     }
@@ -119,14 +116,6 @@ void divi(float** Inputmatrix,float** Imatrix){
         }
 
     }
-
-    printf("\nfunc_divi_testing\n");
-    for(int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 void reverseMat(float** Inputmatrix, float** Imatrix, int n){
@@ -142,16 +131,11 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
                 Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
                 Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
             }
-            printf("testing\n");
-             for(int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
-        }
-        printf("\n");
-             }
             divi(Inputmatrix,Imatrix);
         }
     }
+
+/*
     printf("\n EndOfTopBottom\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
@@ -160,6 +144,7 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
         printf("\n");
     }
     printf("\n");
+*/
 
 //second_serize
     for(int j = 1; j < n; j++){
@@ -173,6 +158,7 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
         }
     }
 
+/*
     printf("\n EndOfSecond\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
@@ -181,18 +167,19 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
         printf("\n");
     }
     printf("\n");
+*/
 
-
+    printf("\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+            printf("arr[%d][%d] : %.0f  ", i+1, j+1, Inputmatrix[i][j]);
         }
         printf("\n");
     }
-    printf("\n");
+    printf("\ninverse matrix\n");
     for (int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Imatrix[i][j]);
+            printf("arr[%d][%d] : %.3f  ", i+1, j+1, Imatrix[i][j]);
         }
         printf("\n");
     }
