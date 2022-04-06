@@ -96,21 +96,30 @@ void divi(float** Inputmatrix,float** Imatrix){
 
                 if(Inputmatrix[b][b] == 0){
                     for(int i = 0; i < n; i++){
-                    float k = Inputmatrix[b-1][i];
-                    Inputmatrix[b][i] = Inputmatrix[b][i] + k;
-                    Imatrix[b][i] = Imatrix[b][i] + k;
+                        if(b == n-1){
+                        float k = Inputmatrix[b-1][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
+                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        }
+                        else{
+                        float k = Inputmatrix[b+1][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
+                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        }
                     }
                 }
+            }
                 
                 float k = Inputmatrix[b][b];
 
                 for(int i = 0; i < n; i++){
                     Inputmatrix[b][i] = Inputmatrix[b][i] / k;
                     Imatrix[b][i] = Imatrix[b][i] / k;
-                    }
-            }
+                }
         }
+
     }
+
     printf("\nfunc_divi_testing\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
@@ -120,29 +129,38 @@ void divi(float** Inputmatrix,float** Imatrix){
     }
 }
 
-void reverseMat(float** Inputmatrix, float** Imatrix, int n){ //아직 안돌아감, 계산이 안됨
+void reverseMat(float** Inputmatrix, float** Imatrix, int n){
 
     divi(Inputmatrix,Imatrix);
 
-    for(int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
-        }
-        printf("\n");
-    }
-
 //top_bottom
     for(int j = 0; j < n; j++){
-        for(int i = 0; i < n-1; i++){
+        for(int i = j; i < n-1; i++){
             float k = 0;
             k = (1 / Inputmatrix[i+1][j]);
             for(int l = 0; l < n; l++){
                 Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
                 Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
             }
+            printf("testing\n");
+             for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+             }
             divi(Inputmatrix,Imatrix);
         }
     }
+    printf("\n EndOfTopBottom\n");
+    for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
 //bottom_top
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n-1; j++){
@@ -154,6 +172,14 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){ //아직 안돌아
             }
         }
     }
+    printf("\n EndOfSecond");
+    for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 
 
     for(int i = 0; i < n; i++) { //testing
