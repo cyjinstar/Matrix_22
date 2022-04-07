@@ -24,10 +24,12 @@ float** nbynImatrix(){ //Function that makes I_matrix
     printf("Reverse Calculator of n by n matrix\n");
     printf("n = ? (1 < n < 5)\n");
     scanf("%d",&n);
+    /*
     if(n < 2 || n > 4){
         printf("unsuitable number.");
         exit(0);
     }
+    */
     float** Imatrix = (float**)malloc(sizeof(float*) * n);
     for (int i = 0; i < n; i++) { 
         Imatrix[i] = (float*)malloc(sizeof(float) * n);
@@ -39,12 +41,6 @@ float** nbynImatrix(){ //Function that makes I_matrix
                 Imatrix[i][j] = 0.0;
             }
         }
-    }
-    for (int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.1f   ", i+1, j+1, Imatrix[i][j]);
-        }
-        printf("\n");
     }
     return Imatrix;
 }
@@ -64,6 +60,7 @@ float** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
         }
     }
 
+//determinant func. should be down here.
     if(n == 2){
         det = Inputmatrix[0][0] * Inputmatrix[1][1] - Inputmatrix[0][1] * Inputmatrix[1][0];
     }
@@ -96,64 +93,93 @@ void divi(float** Inputmatrix,float** Imatrix){
 
                 if(Inputmatrix[b][b] == 0){
                     for(int i = 0; i < n; i++){
-                    float k = Inputmatrix[b-1][i];
-                    Inputmatrix[b][i] = Inputmatrix[b][i] + k;
-                    Imatrix[b][i] = Imatrix[b][i] + k;
+                        if(b == n-1){
+                        float k = Inputmatrix[b-1][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
+                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        }
+                        else{
+                        float k = Inputmatrix[b+1][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
+                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        }
                     }
                 }
+            }
                 
                 float k = Inputmatrix[b][b];
 
                 for(int i = 0; i < n; i++){
                     Inputmatrix[b][i] = Inputmatrix[b][i] / k;
                     Imatrix[b][i] = Imatrix[b][i] / k;
-                    }
-            }
+                }
         }
-    }
-    printf("\nfunc_divi_testing\n");
-    for(int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
-        }
-        printf("\n");
+
     }
 }
 
-void reverseMat(float** Inputmatrix, float** Imatrix, int n){ //아직 안돌아감, 계산이 안됨
+void reverseMat(float** Inputmatrix, float** Imatrix, int n){
 
     divi(Inputmatrix,Imatrix);
 
-    for(int i = 0; i < n; i++) { //testing
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
-        }
-        printf("\n");
-    }
-
+//top_bottom
     for(int j = 0; j < n; j++){
-            for(int i = j; i < n-1; i++){
-                    float k = 0;
-                    k = (1 / Inputmatrix[i+1][j]);
-                    printf("%f\n",k);
-                    for(int l = 0; l < n; l++){
-                        Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
-                        Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
-                    }
-                    divi(Inputmatrix,Imatrix);
+        for(int i = j; i < n-1; i++){
+            float k = 0;
+            k = (1 / Inputmatrix[i+1][j]);
+            for(int l = 0; l < n; l++){
+                Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
+                Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
             }
-
+            divi(Inputmatrix,Imatrix);
         }
+    }
 
+/*
+    printf("\n EndOfTopBottom\n");
     for(int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
             printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
+*/
+
+//second_serize
+    for(int j = 1; j < n; j++){
+        for(int i = 0; i < n-1; i++){
+            float k = 0;
+            k = Inputmatrix[i+1][j];
+            for(int l = j; l < n; l++){
+                Inputmatrix[i][l] -= k * Inputmatrix[i][l];
+                Imatrix[i][l] -= k * Imatrix[i][l];
+            }
+        }
+    }
+
+/*
+    printf("\n EndOfSecond\n");
+    for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+*/
+
+    printf("\n");
+    for(int i = 0; i < n; i++) { //testing
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.0f  ", i+1, j+1, Inputmatrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\ninverse matrix\n");
     for (int i = 0; i < n; i++) { //testing
         for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f   ", i+1, j+1, Imatrix[i][j]);
+            printf("arr[%d][%d] : %.3f  ", i+1, j+1, Imatrix[i][j]);
         }
         printf("\n");
     }
