@@ -84,7 +84,7 @@ float** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
     return Inputmatrix;
 }
 
-void divi(float** Inputmatrix,float** Imatrix){
+void pivot(float** Inputmatrix,float** Imatrix){
     for(int a = 0; a < n; a++){
 
         for(int b = 0; b < n; b++){
@@ -120,7 +120,7 @@ void divi(float** Inputmatrix,float** Imatrix){
 
 void reverseMat(float** Inputmatrix, float** Imatrix, int n){
 
-    divi(Inputmatrix,Imatrix);
+    pivot(Inputmatrix,Imatrix);
 
 //top_bottom
     for(int j = 0; j < n; j++){
@@ -131,7 +131,7 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
                 Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
                 Imatrix[i+1][l] = k * Imatrix[i+1][l] - Imatrix[j][l];
             }
-            divi(Inputmatrix,Imatrix);
+            pivot(Inputmatrix,Imatrix);
         }
     }
 
