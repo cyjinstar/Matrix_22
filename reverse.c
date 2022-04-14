@@ -85,6 +85,10 @@ float** enterMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
 }
 
 void pivot(float** Inputmatrix,float** Imatrix){
+
+    float r = 0;
+    int index = 0;
+
     for(int a = 0; a < n; a++){
 
         for(int b = 0; b < n; b++){
@@ -92,26 +96,41 @@ void pivot(float** Inputmatrix,float** Imatrix){
             if(Inputmatrix[b][b] != 1){
 
                 if(Inputmatrix[b][b] == 0){
+                    for(int i = b; i < n; i++){
+                        if(Inputmatrix[i][b]!=0){
+                            index = i;
+                        }
+                    }
+
                     for(int i = 0; i < n; i++){
                         if(b == n-1){
-                        float k = Inputmatrix[b-1][i];
-                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
-                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        r = Inputmatrix[b-1][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + r;
+                        Imatrix[b][i] = Imatrix[b][i] + r;
                         }
                         else{
-                        float k = Inputmatrix[b+1][i];
-                        Inputmatrix[b][i] = Inputmatrix[b][i] + k;
-                        Imatrix[b][i] = Imatrix[b][i] + k;
+                        r = Inputmatrix[index][i];
+                        Inputmatrix[b][i] = Inputmatrix[b][i] + r;
+                        Imatrix[b][i] = Imatrix[b][i] + r;
                         }
                     }
                 }
             }
-                
+
                 float k = Inputmatrix[b][b];
 
                 for(int i = 0; i < n; i++){
                     Inputmatrix[b][i] = Inputmatrix[b][i] / k;
                     Imatrix[b][i] = Imatrix[b][i] / k;
+                }
+
+                printf("\n");
+                printf("%d, %d\n", a, b);
+                for(int i = 0; i < n; i++) { //testing
+                    for (int j = 0; j < n; j++) {
+                        printf("arr[%d][%d] : %.1f  ", i+1, j+1, Inputmatrix[i][j]);
+                    }
+                printf("\n");
                 }
         }
 
@@ -126,6 +145,9 @@ void reverseMat(float** Inputmatrix, float** Imatrix, int n){
     for(int j = 0; j < n; j++){
         for(int i = j; i < n-1; i++){
             float k = 0;
+            if(Inputmatrix[i+1][j] == 0){
+                continue;
+            }
             k = (1 / Inputmatrix[i+1][j]);
             for(int l = 0; l < n; l++){
                 Inputmatrix[i+1][l] = k * Inputmatrix[i+1][l] - Inputmatrix[j][l];
