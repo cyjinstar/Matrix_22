@@ -1,3 +1,3 @@
-# Testing
+# Inverse matrix and Determinat
 Made for testing
-CreateByChoyoungjin
+CreateByChoyoungjin_201912537
