@@ -16,44 +16,46 @@ class Matrix {
         std::cout << "n = ?"<< std::endl;
         scanf("%d",&n);
     }
-    void initMatrix(){ //initiate all matrixes
-        float** IdentityMatrix = (float**)malloc(sizeof(float*) * n);
+    float** initMatrix(){ //initiate all matrixes
+        float** IdentityMatrixArr = (float**)malloc(sizeof(float*) * n);
         for (int i = 0; i < n; i++) { 
-            IdentityMatrix[i] = (float*)malloc(sizeof(float) * n);
+            IdentityMatrixArr[i] = (float*)malloc(sizeof(float) * n);
                 for (int j = 0; j < n; j++) {
                 if(i==j){
-                    IdentityMatrix[i][j] = 1.0;
+                    IdentityMatrixArr[i][j] = 1.0;
                 }
                 else{
-                    IdentityMatrix[i][j] = 0.0;
+                    IdentityMatrixArr[i][j] = 0.0;
                 }
             }
         }
-        float** InverseMatrix = (float**)malloc(sizeof(float*) * n);
+        float** InverseMatrixArr = (float**)malloc(sizeof(float*) * n);
         for (int i = 0; i < n; i++) {
-            InverseMatrix[i] = (float*)malloc(sizeof(float) * n);
+            InverseMatrixArr[i] = (float*)malloc(sizeof(float) * n);
                 for (int j = 0; j < n; j++) {
-                    InverseMatrix[i][j] = 1.0;
+                    InverseMatrixArr[i][j] = 1.0;
                 }
         }
+        return IdentityMatrixArr;
     }
 
-    void SetInputMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
+    float** SetInputMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
     int num = 0;
     printf("enter %d by %d Matrix\n",n, n);
 
-        InputMatrix = (float**)malloc(sizeof(float*) * n);
+        float** InputMatrixArr = (float**)malloc(sizeof(float*) * n);
         for (int i = 0; i < n; i++) { 
-            InputMatrix[i] = (float*)malloc(sizeof(float) * n);
+            InputMatrixArr[i] = (float*)malloc(sizeof(float) * n);
             for (int j = 0; j < n; j++) {
                 printf("enter [%d][%d] ", i + 1, j + 1);
                 scanf("%d",&num);
-                InputMatrix[i][j] = num;
+                InputMatrixArr[i][j] = num;
             }
         }
+        return InputMatrixArr;
     }
 
-    void pivot(){
+    void pivot(float** InputMatrix, float** IdentityMatrix){
 
         float r = 0;
         int index = 0;
@@ -117,9 +119,9 @@ class Matrix {
         }
     }
 
-    void InverseMat(){
+    void InverseMat(float** InputMatrix, float** IdentityMatrix){
         std::cout << "Inverse Start"<< std::endl;
-        pivot(); // executing is stop here. why?
+        pivot(InputMatrix, IdentityMatrix); // executing is stop here. why?
         for(int j = 0; j < n; j++){
             for(int i = j; i < n-1; i++){
                 std::cout << "Sequece : "<< i << std::endl;
@@ -132,7 +134,7 @@ class Matrix {
                     InputMatrix[i+1][l] = k * InputMatrix[i+1][l] - InputMatrix[j][l];
                     IdentityMatrix[i+1][l] = k * IdentityMatrix[i+1][l] - IdentityMatrix[j][l];
                 }
-                pivot();
+                pivot(InputMatrix, IdentityMatrix);
             }
         }
 
@@ -155,18 +157,20 @@ class Matrix {
             printf("\n");
         }
     }
-                
+
+     void freeArr(float** InputMatrix, float** IdentityMatrix){
+        for (int i = 0; i < n; i++) {free(InputMatrix[i]);}free(InputMatrix);
+        for (int i = 0; i < n; i++) {free(IdentityMatrix[i]);}free(IdentityMatrix);
+        }
 };
 
 int main(){
     Matrix matrix;
     matrix.SetN();
-    matrix.initMatrix();
-    matrix.SetInputMatrix();
-    matrix.InverseMat();
-    std::cout << "Sequece : return"<< std::endl;
-    delete matrix.InputMatrix;
-    delete matrix.IdentityMatrix;
+    float** IdentityMat = matrix.initMatrix();
+    float** InputMat = matrix.SetInputMatrix();
+    matrix.InverseMat(InputMat,IdentityMat);
+    matrix.freeArr(InputMat,IdentityMat);
 
     return 0;
 }
