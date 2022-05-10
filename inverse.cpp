@@ -66,11 +66,13 @@ class Matrix {
                 if(InputMatrix[b][b] != 1){
 
                     if(InputMatrix[b][b] == 0){
+
                         for(int i = b; i < n; i++){
                             if(InputMatrix[i][b]!=0){
                                 index = i;
                             }
                         }
+
                         for(int i = 0; i < n; i++){
                             if(b == n-1){
                             r = InputMatrix[b-1][i];
@@ -83,44 +85,22 @@ class Matrix {
                             IdentityMatrix[b][i] = IdentityMatrix[b][i] + r;
                             }
                         }
-                    
+                    }
                     
                     float k = InputMatrix[b][b];
-                    printf("k = %f\n",k);
-                    for(int i = 0; i < n; i++) { //testing
-                        for (int j = 0; j < n; j++) {
-                            printf("arr[%d][%d] : %.1f  ", i+1, j+1, InputMatrix[i][j]);
-                        }
-                    printf("\n");
-                    }
-
-                    printf("k2 = %f\n",k);
 
                     for(int i = 0; i < n; i++){
-                        printf("i = %d, n = %d\n",i,n);
                         InputMatrix[b][i] = InputMatrix[b][i] / k;
-                        printf("input 11 : %f\n",InputMatrix[b][i]);
                         IdentityMatrix[b][i] = IdentityMatrix[b][i] / k;
                     }
-                }
-
-                    printf("\n");
-                    printf("%d, %d\n", a, b);
-                    for(int i = 0; i < n; i++) { //testing
-                        for (int j = 0; j < n; j++) {
-                            printf("arr[%d][%d] : %.1f  ", i+1, j+1, InputMatrix[i][j]);
-                        }
-                    printf("\n");
-                    }
+                }   
             }
-
-        }
         }
     }
 
     void InverseMat(float** InputMatrix, float** IdentityMatrix){
         std::cout << "Inverse Start"<< std::endl;
-        pivot(InputMatrix, IdentityMatrix); // executing is stop here. why?
+        pivot(InputMatrix, IdentityMatrix);
         for(int j = 0; j < n; j++){
             for(int i = j; i < n-1; i++){
                 std::cout << "Sequece : "<< i << std::endl;
@@ -137,15 +117,31 @@ class Matrix {
             }
         }
 
-        for(int j = 1; j < n; j++){
-            for(int i = 0; i < n-1; i++){
-                float k = 0;
-                k = InputMatrix[i+1][j];
-                for(int l = j; l < n; l++){
-                    InputMatrix[i][l] -= k * InputMatrix[i][l];
-                    IdentityMatrix[i][l] -= k * IdentityMatrix[i][l];
+        for(int j=0;j<n;j++){
+            for(int i=j; i<n-1; i++){
+                float r = InputMatrix[n-2-i][n-1-j];
+                printf("%d %d %f\n",n-1-i,n-j,r);
+                for(int l=0; l<n; l++){
+                    InputMatrix[n-2-i][l] = InputMatrix[n-2-i][l] - r * InputMatrix[n-1-j][l];
+                    IdentityMatrix[n-2-i][l] = IdentityMatrix[n-2-i][l] - r * IdentityMatrix[n-1-j][l];
                 }
+
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < n; j++) {
+                        printf("arr[%d][%d] : %.3f  ", i+1, j+1, IdentityMatrix[i][j]);
+                    }
+                    printf("\n");
+        }
+
             }
+        }
+
+        printf("\ninput matrix\n");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                printf("arr[%d][%d] : %.3f  ", i+1, j+1, InputMatrix[i][j]);
+            }
+            printf("\n");
         }
 
         printf("\ninverse matrix\n");
