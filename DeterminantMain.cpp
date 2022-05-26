@@ -8,10 +8,11 @@ int main() {
     int n;
     cout<<"n?"<<endl;
     cin >> n;
-    int **matrix = new int *[n];
+    float **matrix = new float *[n];
     for (int i = 0; i < n; ++i) {
-        matrix[i] = new int[n];
+        matrix[i] = new float[n];
         for (int j = 0; j < n; ++j) {
+            cout << "enter " << i+1 << "," << j+1 << endl;
             cin >> matrix[i][j];
         }
     }

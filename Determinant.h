@@ -7,8 +7,8 @@ using namespace std;
 
 class DetClass {
    public:
-    int **submatrix(int **matrix, unsigned int n, unsigned int x, unsigned int y);
-    int determinant(int **matrix, unsigned int n);
+    float **submatrix(float **matrix, unsigned int n, unsigned int x, unsigned int y);
+    int determinant(float **matrix, unsigned int n);
 };
 
 #endif

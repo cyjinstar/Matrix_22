@@ -4,11 +4,11 @@
 
 using namespace std;
 
- int** DetClass::submatrix(int **matrix, unsigned int n, unsigned int x, unsigned int y) {
-     int **submatrix = new int *[n - 1];
+ float** DetClass::submatrix(float **matrix, unsigned int n, unsigned int x, unsigned int y) {
+     float **submatrix = new float *[n - 1];
      int subi = 0;
      for (int i = 0; i < n; i++) {
-         submatrix[subi] = new int[n - 1];
+         submatrix[subi] = new float[n - 1];
          int subj = 0;
          if (i == y) {
              continue;
@@ -25,7 +25,7 @@ using namespace std;
      return submatrix;
  }
 
- int DetClass::determinant(int **matrix, unsigned int n) {
+ int DetClass::determinant(float **matrix, unsigned int n) {
      int det = 0;
      if (n == 2) {
          return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
