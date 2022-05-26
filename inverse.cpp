@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <iostream>
 
+using namespace std;
+
 class Matrix {
    public:
     int n;
@@ -12,8 +14,8 @@ class Matrix {
     float **InverseMatrix;
 
     void SetN(){
-        std::cout << "Reverse Calculator of n by n matrix"<< std::endl;
-        std::cout << "n = ?"<< std::endl;
+        cout << "Reverse Calculator of n by n matrix"<< endl;
+        cout << "n = ?"<< endl;
         scanf("%d",&n);
     }
     float** initMatrix(){ //initiate all matrixes
@@ -99,11 +101,11 @@ class Matrix {
     }
 
     void InverseMat(float** InputMatrix, float** IdentityMatrix){
-        std::cout << "Inverse Start"<< std::endl;
+        cout << "Inverse Start"<< endl;
         pivot(InputMatrix, IdentityMatrix);
         for(int j = 0; j < n; j++){
             for(int i = j; i < n-1; i++){
-                std::cout << "Sequece : "<< i << std::endl;
+                cout << "Sequece : "<< i << endl;
                 float k = 0;
                 if(InputMatrix[i+1][j] == 0){
                     continue;
@@ -136,7 +138,7 @@ class Matrix {
             }
         }
 
-        printf("\ninput matrix\n");
+        cout << "\ninput matrix"<< endl;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 printf("arr[%d][%d] : %.3f  ", i+1, j+1, InputMatrix[i][j]);
@@ -144,7 +146,7 @@ class Matrix {
             printf("\n");
         }
 
-        printf("\ninverse matrix\n");
+        cout << "\ninverse matrix"<< endl;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 printf("arr[%d][%d] : %.3f  ", i+1, j+1, IdentityMatrix[i][j]);
