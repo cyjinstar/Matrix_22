@@ -7,10 +7,12 @@
 
 using namespace std;
 
-void Matrix::SetN(){
+int Matrix::SetN(){
     cout << "Reverse Calculator of n by n matrix"<< endl;
     cout << "n = ?"<< endl;
     scanf("%d",&n);
+
+    return n;
 }
 
 float** Matrix::initMatrix(){ //initiate all matrixes

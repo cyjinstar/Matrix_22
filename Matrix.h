@@ -13,7 +13,7 @@ class Matrix {
     float **InputMatrix;
     float **InverseMatrix;
 
-    void SetN();
+    int SetN();
     float** initMatrix();
     float** SetInputMatrix();
     void pivot(float** InputMatrix, float** IdentityMatrix);
