@@ -49,15 +49,17 @@ using namespace std;
     
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f  ", i+1, j+1, adjMatrix[i][j]);
+            printf("arr[%d][%d] : %.1f  ", i+1, j+1, adjMatrix[i][j]);
         }
         printf("\n");
     }
+    for(int c = 0; c <3; c++){
     for (int i = 0; i < n-1; i++) {
         for (int j = 0; j < n-1; j++) {
-            printf("arr[%d][%d] : %.3f  ", i+1, j+1, submatrix(matrix, 3, 2, 2)[i][j]);
+            printf("arr[%d][%d] : %.1f  ", i+1, j+1, submatrix(matrix, 3, c, 2)[i][j]);
         }
         printf("\n");
+    }
     }
 
      return adjMatrix;
