@@ -7,10 +7,12 @@
 
 using namespace std;
 
-void Matrix::SetN(){
+int Matrix::SetN(){
     cout << "Reverse Calculator of n by n matrix"<< endl;
     cout << "n = ?"<< endl;
     scanf("%d",&n);
+
+    return n;
 }
 
 float** Matrix::initMatrix(){ //initiate all matrixes
@@ -92,7 +94,6 @@ void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){
     pivot(InputMatrix, IdentityMatrix);
     for(int j = 0; j < n; j++){
         for(int i = j; i < n-1; i++){
-            cout << "Sequece : "<< i << endl;
             float k = 0;
             if(InputMatrix[i+1][j] == 0){
                 continue;
@@ -108,16 +109,9 @@ void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){
     for(int j=0;j<n;j++){
         for(int i=j; i<n-1; i++){
             float r = InputMatrix[n-2-i][n-1-j];
-            printf("%d %d %f\n",n-1-i,n-j,r);
             for(int l=0; l<n; l++){
                 InputMatrix[n-2-i][l] = InputMatrix[n-2-i][l] - r * InputMatrix[n-1-j][l];
                 IdentityMatrix[n-2-i][l] = IdentityMatrix[n-2-i][l] - r * IdentityMatrix[n-1-j][l];
-            }
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    printf("arr[%d][%d] : %.3f  ", i+1, j+1, IdentityMatrix[i][j]);
-                }
-                printf("\n");
             }
         }
     }
