@@ -10,16 +10,20 @@ using namespace std;
 
 int main(){
     Matrix matrix;
-    DetClass det_c;
     int n = matrix.SetN();
     float** IdentityMat = matrix.initMatrix();
     float** InputMat = matrix.SetInputMatrix();
-    if (det_c.determinant(InputMat,n)==0){
-        cout<<det_c.determinant(InputMat,n)<<endl;
+    if (matrix.determinant(InputMat,n)==0){
+        cout<<matrix.determinant(InputMat,n)<<endl;
         cout<<"det = 0."<<endl;
     }
     else {
-    det_c.detInvese(InputMat,n);
+    cout<<matrix.determinant(InputMat,n)<<endl;
+    float det = matrix.determinant(InputMat,n);
+    float** cofactorMatrix = matrix.cofactor(InputMat,n);
+    matrix.printMatrix(cofactorMatrix, n);
+    float** beforeInverse = matrix.adjointInverse(cofactorMatrix, det, n);
+    matrix.printMatrix(beforeInverse, n);
     }
     matrix.freeArr(InputMat,IdentityMat);
 

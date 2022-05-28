@@ -18,6 +18,11 @@ class Matrix {
     float** SetInputMatrix();
     void pivot(float** InputMatrix, float** IdentityMatrix);
     void InverseMat(float** InputMatrix, float** IdentityMatrix);
+    float** adjointInverse(float** Matrix, float det, int n);
+    float **submatrix(float **matrix, int n, int x, int y);
+    float determinant(float **matrix, int n);
+    float **cofactor(float **matrix, int n);
+    void printMatrix(float** matrix, int n);
     void freeArr(float** InputMatrix, float** IdentityMatrix);
 };
 
