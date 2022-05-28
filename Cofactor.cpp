@@ -14,7 +14,13 @@ int main(){
     int n = matrix.SetN();
     float** IdentityMat = matrix.initMatrix();
     float** InputMat = matrix.SetInputMatrix();
+    if (det_c.determinant(InputMat,n)==0){
+        cout<<det_c.determinant(InputMat,n)<<endl;
+        cout<<"det = 0."<<endl;
+    }
+    else {
     det_c.detInvese(InputMat,n);
+    }
     matrix.freeArr(InputMat,IdentityMat);
 
     return 0;

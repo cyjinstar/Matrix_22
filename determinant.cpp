@@ -5,10 +5,10 @@
 using namespace std;
 
  float** DetClass::submatrix(float **matrix, int n, int x, int y){
-     float **submatrix = new float *[n - 1];
+     float **submatrix = new float *[n];
      int subi = 0;
      for (int i = 0; i < n; i++) {
-         submatrix[subi] = new float[n - 1];
+         submatrix[subi] = new float[n];
          int subj = 0;
          if (i == y) {
              continue;
@@ -18,7 +18,6 @@ using namespace std;
                  continue;
              }
              submatrix[subi][subj] = matrix[i][j];
-             printf("%.0f ",submatrix[subi][subj]);
              subj++;
          }
          subi++;
@@ -43,24 +42,7 @@ using namespace std;
         adjMatrix[i] = (float*)malloc(sizeof(float) * n);
             for (int j = 0; j < n; j++) {
                 adjMatrix[i][j] = ((j+i) % 2 == 0 ? 1 : -1) * determinant(submatrix(matrix, n, j, i), n - 1);
-                printf("%d, %d \n", i , j);
             }
     }
-    
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.1f  ", i+1, j+1, adjMatrix[i][j]);
-        }
-        printf("\n");
-    }
-    for(int c = 0; c <3; c++){
-    for (int i = 0; i < n-1; i++) {
-        for (int j = 0; j < n-1; j++) {
-            printf("arr[%d][%d] : %.1f  ", i+1, j+1, submatrix(matrix, 3, c, 2)[i][j]);
-        }
-        printf("\n");
-    }
-    }
-
      return adjMatrix;
  }
