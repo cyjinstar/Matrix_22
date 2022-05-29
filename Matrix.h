@@ -23,7 +23,7 @@ class Matrix {
     float determinant(float **matrix, int n);
     float **cofactor(float **matrix, int n);
     void printMatrix(float** matrix, int n);
-    void freeArr(float** InputMatrix, float** IdentityMatrix);
+    void freeArr(float** Matrix1, float** Matrix2);
 };
 
 #endif

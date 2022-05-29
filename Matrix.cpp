@@ -199,7 +199,7 @@ void Matrix::printMatrix(float** matrix, int n){//print the matrix
     }
 }
 
-void Matrix::freeArr(float** InputMatrix, float** IdentityMatrix){//free memory
-    for (int i = 0; i < n; i++) {free(InputMatrix[i]);}free(InputMatrix);
-    for (int i = 0; i < n; i++) {free(IdentityMatrix[i]);}free(IdentityMatrix);
+void Matrix::freeArr(float** Matrix1, float** Matrix2){//free memory
+    for (int i = 0; i < n; i++) {free(Matrix1[i]);}free(Matrix1);
+    for (int i = 0; i < n; i++) {free(Matrix2[i]);}free(Matrix2);
     }

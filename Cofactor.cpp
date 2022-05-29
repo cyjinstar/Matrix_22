@@ -21,11 +21,9 @@ int main(){
     cout<<matrix.determinant(InputMat,n)<<endl;
     float det = matrix.determinant(InputMat,n);
     float** cofactorMatrix = matrix.cofactor(InputMat,n);
-    matrix.printMatrix(cofactorMatrix, n);
     float** beforeInverse = matrix.adjointInverse(cofactorMatrix, det, n);
     matrix.printMatrix(beforeInverse, n);
+    matrix.freeArr(cofactorMatrix,beforeInverse);
     }
-    matrix.freeArr(InputMat,IdentityMat);
-
     return 0;
 }
