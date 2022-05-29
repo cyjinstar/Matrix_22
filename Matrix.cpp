@@ -167,13 +167,15 @@ float** Matrix::submatrix(float **matrix, int n, int x, int y){ //make sub matri
 
 float Matrix::determinant(float **matrix, int n) {//determinant
     float det = 0;
+    if (n == 1){
+        return matrix[0][0];
+    }
     if (n == 2) {
         return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
     }
     for (int x = 0; x < n; ++x) {
         det += ((x % 2 == 0 ? 1 : -1) * matrix[0][x] * determinant(submatrix(matrix, n, x, 0), n - 1));
     }
-    printf("determinant_determinant : %f \n",det);
     return det;
 }
 
