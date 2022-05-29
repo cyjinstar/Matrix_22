@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include "Matrix.h"
-#include "Determinant.h"
 
 using namespace std;
 
