@@ -15,7 +15,7 @@ int Matrix::SetN(){
     return n;
 }
 
-float** Matrix::initMatrix(){ //initiate all matrixes
+float** Matrix::initMatrix(){ //initiate matrixes
     float** IdentityMatrixArr = (float**)malloc(sizeof(float*) * n);
     for (int i = 0; i < n; i++) { 
         IdentityMatrixArr[i] = (float*)malloc(sizeof(float) * n);
@@ -38,7 +38,7 @@ float** Matrix::initMatrix(){ //initiate all matrixes
     return IdentityMatrixArr;
 }
 
-float** Matrix::SetInputMatrix(){ //Input n*n Matrix & Investigate that det == 0 or not
+float** Matrix::SetInputMatrix(){ //Input n*n Matrix
 int num = 0;
 printf("enter %d by %d Matrix\n",n, n);
     float** InputMatrixArr = (float**)malloc(sizeof(float*) * n);
@@ -53,7 +53,7 @@ printf("enter %d by %d Matrix\n",n, n);
     return InputMatrixArr;
 }
 
-void Matrix::pivot(float** InputMatrix, float** IdentityMatrix){
+void Matrix::pivot(float** InputMatrix, float** IdentityMatrix){//func that needs when do Gauss-Jordan Matrix Inverse
     float r = 0;
     int index = 0;
     for(int a = 0; a < n; a++){
@@ -89,7 +89,7 @@ void Matrix::pivot(float** InputMatrix, float** IdentityMatrix){
     }
 }
 
-void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){
+void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){//Use Gauss-Jordan El. To InverseMatrix
     cout << "Inverse Start"<< endl;
     pivot(InputMatrix, IdentityMatrix);
     for(int j = 0; j < n; j++){
@@ -131,7 +131,75 @@ void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){
     }
 }
 
- void Matrix::freeArr(float** InputMatrix, float** IdentityMatrix){
-    for (int i = 0; i < n; i++) {free(InputMatrix[i]);}free(InputMatrix);
-    for (int i = 0; i < n; i++) {free(IdentityMatrix[i]);}free(IdentityMatrix);
+float** Matrix::adjointInverse(float** Matrix, float det, int n){ //Inverse the matrix use determinant and adjoint of Matrix
+    float** InverseMatrix = (float**)malloc(sizeof(float*) * n);
+    for (int i = 0; i < n; i++) {
+        InverseMatrix[i] = (float*)malloc(sizeof(float) * n);
+        for (int j = 0; j < n; j++) {
+            printf("%.1f, adj_det:%.1f\n",Matrix[j][i],det);
+            InverseMatrix[i][j] = Matrix[j][i] / det;
+            printf("%.1f\n",InverseMatrix[i][j]);
+        }
+    }
+    return InverseMatrix;
+}
+
+float** Matrix::submatrix(float **matrix, int n, int x, int y){ //make sub matrix
+     float **submatrix = new float *[n];
+     int subi = 0;
+     for (int i = 0; i < n; i++) {
+         submatrix[subi] = new float[n];
+         int subj = 0;
+         if (i == y) {
+             continue;
+         }
+         for (int j = 0; j < n; j++) {
+             if (j == x) {
+                 continue;
+             }
+             submatrix[subi][subj] = matrix[i][j];
+             subj++;
+         }
+         subi++;
+     }
+     return submatrix;
+ }
+
+float Matrix::determinant(float **matrix, int n) {//determinant
+    float det = 0;
+    if (n == 1){
+        return matrix[0][0];
+    }
+    if (n == 2) {
+        return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
+    }
+    for (int x = 0; x < n; ++x) {
+        det += ((x % 2 == 0 ? 1 : -1) * matrix[0][x] * determinant(submatrix(matrix, n, x, 0), n - 1));
+    }
+    return det;
+}
+
+float** Matrix::cofactor(float **matrix, int n){
+    float** cofactorMatrix = (float**)malloc(sizeof(float*) * n);
+    for (int i = 0; i < n; i++) {
+        cofactorMatrix[i] = (float*)malloc(sizeof(float) * n);
+            for (int j = 0; j < n; j++) {
+                cofactorMatrix[i][j] = ((j+i) % 2 == 0 ? 1 : -1) * determinant(submatrix(matrix, n, j, i), n - 1);
+            }
+    }
+     return cofactorMatrix;
+}
+
+void Matrix::printMatrix(float** matrix, int n){//print the matrix
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("arr[%d][%d] : %.2f  ", i+1, j+1, matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void Matrix::freeArr(float** Matrix1, float** Matrix2){//free memory
+    for (int i = 0; i < n; i++) {free(Matrix1[i]);}free(Matrix1);
+    for (int i = 0; i < n; i++) {free(Matrix2[i]);}free(Matrix2);
     }

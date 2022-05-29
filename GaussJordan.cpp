@@ -4,17 +4,15 @@
 #include <stdlib.h>
 #include <iostream>
 #include "Matrix.h"
-#include "Determinant.h"
 
 using namespace std;
 
 int main(){
     Matrix matrix;
-    DetClass det_c;
     int n = matrix.SetN();
     float** IdentityMat = matrix.initMatrix();
     float** InputMat = matrix.SetInputMatrix();
-    if (det_c.determinant(InputMat, n)){
+    if (matrix.determinant(InputMat, n)){
         matrix.InverseMat(InputMat,IdentityMat);
     }
     else {
