@@ -8,7 +8,6 @@
 using namespace std;
 
 int Matrix::SetN(){
-    cout << "Reverse Calculator of n by n matrix"<< endl;
     cout << "n = ?"<< endl;
     scanf("%d",&n);
 
@@ -90,9 +89,8 @@ void Matrix::pivot(float** InputMatrix, float** IdentityMatrix){//func that need
 }
 
 void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){//Use Gauss-Jordan El. To InverseMatrix
-    cout << "Inverse Start"<< endl;
     pivot(InputMatrix, IdentityMatrix);
-    for(int j = 0; j < n; j++){
+    for(int j = 0; j < n; j++){ //make right triangle_Matrix
         for(int i = j; i < n-1; i++){
             float k = 0;
             if(InputMatrix[i+1][j] == 0){
@@ -115,13 +113,6 @@ void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){//Use Gauss
             }
         }
     }
-    cout << "\ninput matrix"<< endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f  ", i+1, j+1, InputMatrix[i][j]);
-        }
-        printf("\n");
-    }
     cout << "\ninverse matrix"<< endl;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -136,9 +127,7 @@ float** Matrix::adjointInverse(float** Matrix, float det, int n){ //Inverse the 
     for (int i = 0; i < n; i++) {
         InverseMatrix[i] = (float*)malloc(sizeof(float) * n);
         for (int j = 0; j < n; j++) {
-            printf("%.1f, adj_det:%.1f\n",Matrix[j][i],det);
             InverseMatrix[i][j] = Matrix[j][i] / det;
-            printf("%.1f\n",InverseMatrix[i][j]);
         }
     }
     return InverseMatrix;
