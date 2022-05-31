@@ -9,15 +9,14 @@ using namespace std;
 
 int main(){
     Matrix matrix;
+    cout << "Reverse Calculator of n by n matrix"<< endl;
     int n = matrix.SetN();
     float** IdentityMat = matrix.initMatrix();
     float** InputMat = matrix.SetInputMatrix();
     if (matrix.determinant(InputMat,n)==0){
-        cout<<matrix.determinant(InputMat,n)<<endl;
         cout<<"det = 0."<<endl;
     }
     else {
-    cout<<matrix.determinant(InputMat,n)<<endl;
     float det = matrix.determinant(InputMat,n);
     float** cofactorMatrix = matrix.cofactor(InputMat,n);
     float** beforeInverse = matrix.adjointInverse(cofactorMatrix, det, n);

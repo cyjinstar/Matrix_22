@@ -9,6 +9,7 @@ using namespace std;
 
 int main(){
     Matrix matrix;
+    cout << "Reverse Calculator of n by n matrix"<< endl;
     int n = matrix.SetN();
     float** IdentityMat = matrix.initMatrix();
     float** InputMat = matrix.SetInputMatrix();
