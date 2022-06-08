@@ -18,6 +18,8 @@ class Matrix {
     float** SetInputMatrix();
     void pivot(float** InputMatrix, float** IdentityMatrix);
     void InverseMat(float** InputMatrix, float** IdentityMatrix);
+    void swap(float** inputmatrix, float** unitmatrix, int n, int a, int b);
+    void GJInverse(float** inputmatrix, float** identitymatrix);
     float** adjointInverse(float** Matrix, float det, int n);
     float **submatrix(float **matrix, int n, int x, int y);
     float determinant(float **matrix, int n);
