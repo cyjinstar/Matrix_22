@@ -52,96 +52,61 @@ printf("enter %d by %d Matrix\n",n, n);
     return InputMatrixArr;
 }
 
-void Matrix::pivot(float** InputMatrix, float** IdentityMatrix){//func that needs when do Gauss-Jordan Matrix Inverse
-    float r = 0;
-    int index = -1;
-    for(int a = 0; a < n; a++){
-        for(int b = 0; b < n; b++){
-            if(InputMatrix[b][b] != 1){//주대각선상의 성분이 1이 아닐 때 1로 만듬
-                if(InputMatrix[b][b] == 0){//주대각선상의 성분이 0일 경우
-                    for(int i = 0; i < n; i++){
-                        if(InputMatrix[i][b]!=0){//행렬의 0이 아닌 성분을 가진 행을 찾음
-                            index = i;
-                        }
-                    }
-                    for(int i = 0; i < n; i++){
-                        if(b == n-1){//행렬의 맨 마지막행에 대한 연산에서 생기는 오류를 수정하기 위한 부분
-                        r = InputMatrix[b-1][i];
-                        InputMatrix[b][i] = InputMatrix[b][i] + r;
-                        IdentityMatrix[b][i] = IdentityMatrix[b][i] + r;
-                        }
-                        else{
-                        r = InputMatrix[index][i]; //주대각선이 0인 행에 미리 검색한 0이 아닌 행의 성분을 더한다.
-                        InputMatrix[b][i] = InputMatrix[b][i] + r;
-                        IdentityMatrix[b][i] = IdentityMatrix[b][i] + r;
-                        }
-                    }
-                }
-                
-                float k = InputMatrix[b][b]; //해당 성분으로 성분이 속한 행의 요소들을 전부 나눠준다.
-                for(int i = 0; i < n; i++){
-                    InputMatrix[b][i] = InputMatrix[b][i] / k;
-                    IdentityMatrix[b][i] = IdentityMatrix[b][i] / k;
-                }
-            }   
-        }
-    }
-}
+void Matrix::swap(float** inputmatrix, float** unitmatrix, int n, int a, int b) {
+		for (int i = 0; i < n; i++) {
+			float temp1 = inputmatrix[a][i];
+			inputmatrix[a][i] = inputmatrix[b][i];
+			inputmatrix[b][i] = temp1;
 
-void Matrix::InverseMat(float** InputMatrix, float** IdentityMatrix){//Use Gauss-Jordan El. To InverseMatrix
-    pivot(InputMatrix, IdentityMatrix);
-    for(int j = 0; j < n; j++){ //make right triangle_Matrix
-        for(int i = j; i < n-1; i++){//삼각행렬을 만드는 부분
-            float k = 0;
-            if(InputMatrix[i+1][j] == 0){
-                continue;
-            }
-            k = (1 / InputMatrix[i+1][j]);
-            for(int l = 0; l < n; l++){
-                InputMatrix[i+1][l] = k * InputMatrix[i+1][l] - InputMatrix[j][l];
-                IdentityMatrix[i+1][l] = k * IdentityMatrix[i+1][l] - IdentityMatrix[j][l];
-            }
-            printf("test\n");
-                printMatrix(InputMatrix,n);
-            pivot(InputMatrix, IdentityMatrix);
-        }
-    }
+			float temp2 = unitmatrix[a][i];
+			unitmatrix[a][i] = unitmatrix[b][i];
+			unitmatrix[b][i] = temp2;
+		}
+	}
 
-    for(int j=0;j<n;j++){//주대각선을 제외한 우측 상단의 요소들을 0으로 만드는 부분
-        for(int i=j; i<n-1; i++){
-            float r = InputMatrix[n-2-i][n-1-j];
-            for(int l=0; l<n; l++){
-                InputMatrix[n-2-i][l] = InputMatrix[n-2-i][l] - r * InputMatrix[n-1-j][l];
-                IdentityMatrix[n-2-i][l] = IdentityMatrix[n-2-i][l] - r * IdentityMatrix[n-1-j][l];
-            }
-        }
-    }
-    printf("\n");
-    printMatrix(InputMatrix,n);
+void Matrix::GJInverse(float** inputmatrix, float** identitymatrix) {
+		for (int i = 0; i < n; i++) {
+			if (inputmatrix[i][i] == 0) { //행교환
+				for (int j = i + 1; j < n; j++) {
+					if (inputmatrix[j][i] != 0) {
+						swap(inputmatrix, identitymatrix, n, i, j);
+						break;
+					}
+				}
+				i--; // swap 헀으므로 실직적으로는 실행x
+			}
+			else {
+				float save1 = inputmatrix[i][i];
+				for (int j = 0; j < n; j++) {
+					inputmatrix[i][j] *= (1 / save1);
+					identitymatrix[i][j] *= (1 / save1);
+				}
+				for (int j = i + 1; j < n; j++) {
+					float index = inputmatrix[j][i];
+					for (int k = 0; k < n; k++) {
+						inputmatrix[j][k] -= (inputmatrix[i][k] * index);
+						identitymatrix[j][k] -= (identitymatrix[i][k] * index);
+					}
+				}
+			}
+		}
+		float index = inputmatrix[n - 1][n - 1];
+		for (int i = 0; i < n; i++) {
+			inputmatrix[n - 1][i] *= (1 / index);
+			identitymatrix[n - 1][i] *= (1 / index);
+		}
+		for (int i = n - 1; i > 0; i--) {
+			for (int j = i - 1; j >= 0; j--) {
+				float index = inputmatrix[j][i];
+				for (int k = 0; k < n; k++) {
+					inputmatrix[j][k] -= (inputmatrix[i][k] * index);
+					identitymatrix[j][k] -= (identitymatrix[i][k] * index);
+				}
+			}
+		}
+	} 
 
-for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-            if(i==j){
-                if(InputMatrix[i][j] != 1.0){
-                    InverseMat(InputMatrix, IdentityMatrix);
-                }
-            }
-            else{
-                if(InputMatrix[i][j] != 0.0){
-                    InverseMat(InputMatrix, IdentityMatrix);
-                } //그 외의 요소는 0
-            }
-        }
-    }
 
-    cout << "\ninverse matrix"<< endl; //역행렬을 출력하는 부분
-    for (int i = 0; i < n; i++) { //printmatrix함수를 사용하여 생략가능.
-        for (int j = 0; j < n; j++) {
-            printf("arr[%d][%d] : %.3f  ", i+1, j+1, IdentityMatrix[i][j]);
-        }
-        printf("\n");
-    }
-}
 
 float** Matrix::adjointInverse(float** Matrix, float det, int n){ //Inverse the matrix use determinant and adjoint of Matrix
     float** InverseMatrix = (float**)malloc(sizeof(float*) * n);
